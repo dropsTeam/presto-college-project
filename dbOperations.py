@@ -22,30 +22,32 @@ class dbOperations:
     
     def loginAdmin(self, passportNumber, password): 
         
-        user = self.findUser(passportNumber, True)
-        
-        if bcrypt.checkpw(password, user["password"]):
-            return True
-        else:
+        if (isUserExist(passportNumber, True)):
+            user = self.findUser(passportNumber, True)
+            if bcrypt.checkpw(password, user["password"]):
+                return True
+            else:
+                return False
+        else: 
             return False
     
 
     
-    def registerAdmin(self, userName, password, address, passportNumber, country, email):
+    def registerAdmin(self, userName, password, address, passportNumber, country, email, contact):
          
-        if(self.__userCollection.count({"passportNumber": passportNumber, "isAdmin": True}, { limit: 1 }) != 0): 
+        if( isUserExist(passportNumber, True) ): 
             raise Exception("User Already exist, try with diffent passport number.")
         else:
             hashed = bcrypt.kdf( password= password, salt='salt', desired_key_bytes=32, rounds=100)
-            self.__userCollection.insert_one({"userName": userName, "password": hashed, "isAdmin": True, "balance": 0, "address": address, "country": country, "passportNumber": passportNumber, "email": email})
+            self.__userCollection.insert_one({"userName": userName, "password": hashed, "isAdmin": True, "balance": 0, "address": address, "country": country, "passportNumber": passportNumber, "email": email, "contact": contact})
     
     
-    def addUser(self, userName, address, balance, country, passportNumber, email):
+    def addUser(self, userName, address, balance, country, passportNumber, email, contact):
         
-        if(self.__userCollection.count({"passportNumber": passportNumber, "isAdmin": False}, { limit: 1 }) != 0): 
+        if( isUserExist(passportNumber, False) ): 
             raise Exception("User Already exist, try with different passport number.")
         else:
-            self.__userCollection.insert_one({"userName": userName, "isAdmin": False, "balance": balance, "address": address, "country": country, "passportNumber": passportNumber, "email": email})
+            self.__userCollection.insert_one({"userName": userName, "isAdmin": False, "balance": balance, "address": address, "country": country, "passportNumber": passportNumber, "email": email, "contact": contact})
 
 
 
