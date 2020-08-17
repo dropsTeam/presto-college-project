@@ -48,6 +48,9 @@ class dbOperations:
             raise Exception("User Already exist, try with different passport number.")
         else:
             self.__userCollection.insert_one({"userName": userName, "isAdmin": False, "balance": balance, "address": address, "country": country, "passportNumber": passportNumber, "email": email, "contact": contact})
+    
 
-
-
+    def addFunds(self, passportNumber):
+        
+        if isUserExist(passportNumber, False):
+            return True
