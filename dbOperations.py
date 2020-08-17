@@ -11,8 +11,8 @@ class dbOperations:
         self.__userCollection = self.__db['users']
 
         if( len(self.__userCollection.find({"isAdmin": True})) == 0 ):
-            self.registerAdmin("Sagara Samarawickrama","12345", "Address not added", "P00000", "Canada", "abc@gmail.com", 123456789)
-            
+            self.registerAdmin("Sagara Samarawickrama","12345", "Address not added", "P00000", "Canada", "abc@gmail.com", 123456789 )
+
 
 
 
