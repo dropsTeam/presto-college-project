@@ -366,13 +366,11 @@ class EditUser(tk.Frame):
                            command=lambda: deleteUser())
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
-<<<<<<< HEAD
-        
-=======
+
         deleteUser = tk.Button(self, text="Delete User",
                            command=lambda: deleteUser())
         deleteUser.Pack()
->>>>>>> 12ec6c8bad282594d4d26991ae7c47ed3b0d86a8
+
         button.pack()
 
         
