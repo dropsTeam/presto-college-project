@@ -314,7 +314,8 @@ class Dashboard(tk.Frame):
                 listbox1.insert(END, str(j) + ' ( name ) ' + str(values["userName"]) + '  ( Address ) ' + str(values["address"]) + '   ( Passport )  '+ str(values["passportNumber"])  ) 
 
         def userProfile():
-                current_passport = dbOperations.currnetPassport
+                current_passport = userIndex[globalRef.userList.curselection()-1]
+                print(globalRef.userList.curselection())
                 controller.show_frame("EditUser")
 
 
@@ -364,7 +365,7 @@ class EditUser(tk.Frame):
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
         deleteUser = tk.Button(self, text="Delete User",
-                           command=lambda: deleteUser())
+                           command=lambda: deleteUser()).place(x=70, y=80)
         button.pack()
 
         
