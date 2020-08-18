@@ -16,8 +16,10 @@ class dbOperations:
 
 
     def isUserExist(self, passportNumber, isAdmin):
-        print(self.__userCollection.find({"passportNumber": passportNumber, "isAdmin": isAdmin}, { "limit": 1 }))
-        return False
+        i = 0
+        for x in self.__userCollection.find({"passportNumber": passportNumber, "isAdmin": isAdmin}, { "limit": 1 }):
+            i+=1
+        return i>0
         
 
 
