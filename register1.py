@@ -180,7 +180,19 @@ class LoginPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.UI()
+        
 
+    def loginAdmin(self):
+            db = dbOperations()
+            if db.loginAdmin(self.txt_passportNo.get(), self.txt_passwordName.get()):
+                self.controller.show_frame("Dashboard")
+            else:
+                tk.messagebox.showerror(title="Login Failed", message="Wrong Information")
+
+        
+    
+    def UI(self):
         self.bg=ImageTk.PhotoImage(file="images/pexels-felix-mittermeier-956999.jpg")
         bg=Label(self,image=self.bg).place(x=0,y=0, relwidth=1,relheight=1)
 
@@ -198,16 +210,10 @@ class LoginPage(tk.Frame):
         passwordName=Label(self, text="Password", font=("arial", 12),bg="white", fg="green").place(x=50, y=310)
         self.txt_passwordName=Entry(self, font=("arial",15),bg="whitesmoke").place(x=50,y=340, width=250)
 
-        button = tk.Button(self, text="Login Now",
-                            command=lambda: self.login())
+        button = tk.Button(self, text="Login Now", command= lambda: self.loginAdmin() )
         button.pack()
 
-    def login(self):
-            db = dbOperations()
-            if db.loginAdmin(self.txt_passportNo, self.txt_passwordName):
-                self.controller.show_frame("Dashboard")
-            else:
-                tk.messagebox.showerror(title="Login Failed", message="Wrong Information")
+
         
         
        
