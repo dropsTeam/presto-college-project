@@ -66,7 +66,16 @@ class UserRegister(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.controller = controller
+
+        def createUser(userName, address, balance, passportNumber, email, contact):
+                db = dbOperations()
+                try:
+                        db.addUser(userName, address, balance, passportNumber, email, contact)
+                        controller.show_frame('Dashboard')
+                except ex:
+                        tkinter.messagebox.showerror(title="Adding Failed", message= str(ex) )
+
+
 
         self.bg=ImageTk.PhotoImage(file="images/pexels-felix-mittermeier-956999.jpg")
         bg=Label(self,image=self.bg).place(x=0,y=0, relwidth=1,relheight=1)
@@ -82,25 +91,31 @@ class UserRegister(tk.Frame):
 # ------------111111111111111111-------------------------------------------------------
         
         firstName=Label(self, text="First Name", font=("arial", 12),bg="white", fg="green").place(x=50, y=100)
-        self.txt_firstName=Entry(self, font=("arial",15),bg="whitesmoke").place(x=50,y=130, width=250)
+        txt_firstName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_firstName.place(x=50,y=130, width=250)
 
         lastName=Label(self, text="Last Name", font=("arial", 12),bg="white", fg="green").place(x=370, y=100)
-        self.txt_lastName=Entry(self, font=("arial",15),bg="whitesmoke").place(x=370,y=130, width=250)
+        txt_lastName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_lastName.place(x=370,y=130, width=250)
 
 # ------------222222222222222222222------------------------------------------------------
         passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
-        self.txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke").place(x=50,y=200, width=250)
+        txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_passportNo.place(x=50,y=200, width=250)
 
         address=Label(self, text="Address", font=("arial", 12),bg="white", fg="green").place(x=370, y=170)
-        self.txt_address=Entry(self, font=("arial",15),bg="whitesmoke").place(x=370,y=200, width=250)
+        txt_address=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_address.place(x=370,y=200, width=250)
 
 # -------------333333333333333333333-----------------------------------------------------
         
         contactName=Label(self, text="Mobile No", font=("arial", 12),bg="white", fg="green").place(x=50, y=240)
-        self.txt_contactName=Entry(self, font=("arial",15),bg="whitesmoke").place(x=50,y=270, width=250)
+        txt_contactName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_contactName.place(x=50,y=270, width=250)
 
         emailId=Label(self, text="Email Id", font=("arial", 12),bg="white", fg="green").place(x=370, y=240)
-        self.txt_emailId=Entry(self, font=("arial",15),bg="whitesmoke").place(x=370,y=270, width=250)
+        txt_emailId=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_emailId.place(x=370,y=270, width=250)
 
 # # -------------44444444444444444444444-----------------------------------------------------
 #         passwordName=Label(self, text="Password", font=("arial", 12),bg="white", fg="green").place(x=50, y=310)
@@ -115,7 +130,7 @@ class UserRegister(tk.Frame):
         btn_register=Button(self, text="Register Now" ,font=("arial",20),bg="whitesmoke" ,bd=0,cursor="hand2" ).place(x=50,y=420)
         # button3 = tk.Button(self, text="Register Now" ,font=("arial",20),bg="whitesmoke" ,bd=0,cursor="hand2",command=lambda: controller.show_frame("Dashboard")).place(x=50,y=420)
         button4 = tk.Button(self, text="Go to Dashboard",
-                            command=lambda: controller.show_frame("Dashboard"))
+                            command=lambda: lambda: createUser(txt_firstName.get() + ' ' + txt_lastName.get() , txt_address.get(), 0, txt_passportNo.get(), txt_emailId.get(), txt_contactName.get()) )
         # button = tk.Button(self, text="Register Now",
         #                     command=lambda: controller.show_frame("Dashboard"))
         button4.pack()
@@ -195,7 +210,6 @@ class LoginPage(tk.Frame):
             if db.loginAdmin(passport, password):
                 controller.show_frame("Dashboard")
             else:
-                
                 tkinter.messagebox.showerror(title="Login Failed", message="Wrong Information, try with correct passport and password")
 
 
