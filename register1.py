@@ -14,6 +14,8 @@ except ImportError:
 
 globalRef = GlobalRef()
 
+current_passport=0
+
 
 class SampleApp(tk.Tk):
 
@@ -47,7 +49,6 @@ class SampleApp(tk.Tk):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()
-
 
 
 
@@ -307,7 +308,10 @@ class Dashboard(tk.Frame):
                 j+=1
                 listbox1.insert(END, str(j) + ' ( name ) ' + str(values["userName"]) + '  ( Address ) ' + str(values["address"]) + '   ( Passport )  '+ str(values["passportNumber"])  ) 
 
-       
+        def userProfile():
+                current_passport = dbOperations.currnetPassport
+                controller.show_frame("EditUser")
+
 
         listbox1.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox1.yview) 

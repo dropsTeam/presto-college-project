@@ -4,6 +4,8 @@ from pymongo import MongoClient
 
 
 class dbOperations:
+
+    currnetPassport = 0
     
     def __init__(self):
 
@@ -35,6 +37,7 @@ class dbOperations:
         if (self.isUserExist(passportNumber, True)):
             user = self.findUser(passportNumber, True)
             if user["password"] == password:
+                self.currnetPassport = passportNumber
                 return True
             else:
                 return False
