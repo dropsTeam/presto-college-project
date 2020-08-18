@@ -16,6 +16,9 @@ globalRef = GlobalRef()
 
 current_passport=0
 
+adminIndex = []
+userIndex = []
+
 
 class SampleApp(tk.Tk):
 
@@ -292,6 +295,7 @@ class Dashboard(tk.Frame):
         i = 0
         for values in allUser: 
                 i+=1
+                userIndex.append(str(values["passportNumber"]))
                 listbox.insert(END, str(i) + ' ( name ) ' + str(values["userName"]) + '  ( Address ) ' + str(values["address"]) + '   ( Passport )  '+ str(values["passportNumber"]) + '   ( Amount )   $'  + str(values["balance"]) ) 
         listbox.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox.yview) 
@@ -306,6 +310,7 @@ class Dashboard(tk.Frame):
         j = 0
         for values in allAdmin: 
                 j+=1
+                adminIndex.append(str(values["passportNumber"]))
                 listbox1.insert(END, str(j) + ' ( name ) ' + str(values["userName"]) + '  ( Address ) ' + str(values["address"]) + '   ( Passport )  '+ str(values["passportNumber"])  ) 
 
         def userProfile():
@@ -315,7 +320,7 @@ class Dashboard(tk.Frame):
 
         listbox1.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox1.yview) 
-
+        
         globalRef.userList= listbox
         globalRef.adminList = listbox1
 
@@ -346,7 +351,7 @@ class EditUser(tk.Frame):
                 else:
                         if dbOperations.deleteUser(current_passport):
                                 tkinter.messagebox.showinfo(title="Done !", message="Successfully deleted!")
-                                
+                                globalRef.userList.delete()
                                 controller.show_frame("Dashboard")
                         else:
                                 tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
