@@ -79,7 +79,13 @@ class dbOperations:
             self.__userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact})
         else:
             raise Exception("User Not found!")
-
+    
+    def deleteUser(self, passportNumber):
+        try:
+            self.__userCollection.delete_one({"passportNumber": passportNumber})
+            return True
+        except expression as identifier:
+            return False
 
     def getAllUsers(self):
         return self.__userCollection.find({"isAdmin": False})

@@ -339,6 +339,19 @@ class EditUser(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
+        def deleteUser():
+                if current_passport == dbOperations.currnetPassport:
+                        tkinter.messagebox.showerror(title="Error !", message="You cannot delete yourself !")
+
+                else:
+                        if dbOperations.deleteUser(current_passport):
+                                tkinter.messagebox.showinfo(title="Done !", message="Successfully deleted!")
+                                
+                                controller.show_frame("Dashboard")
+                        else:
+                                tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
+
+
         title=Label(self, text="EDIT USER PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
