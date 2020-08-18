@@ -5,10 +5,17 @@ try:
     import tkinter.messagebox
     from PIL import Image,ImageTk 
     from dbOperations import dbOperations
+    from globalRef import GlobalRef
   # python 3
 except ImportError:
     import Tkinter as tk     # python 2
     import tkFont as tkfont  # python 2
+
+
+globalRef = GlobalRef()
+
+current_passport=0
+
 
 class SampleApp(tk.Tk):
 
@@ -72,6 +79,7 @@ class UserRegister(tk.Frame):
                 try:
                         db.addUser(userName, address, balance, passportNumber, email, contact)
                         tkinter.messagebox.showinfo('Success', 'Successfully created')
+                        globalRef.userList.insert(END, 'New : ' + ' ( name ) ' + str(userName) + '  ( Address ) ' + str(address) + '   ( Passport )  '+ str(passportNumber) + '   ( Amount )   $'  + str(0) ) 
                         controller.show_frame('Dashboard')
                 except Exception as ex:
                         tkinter.messagebox.showerror(title="Adding Failed", message= str(ex) )
@@ -148,8 +156,10 @@ class AdminUser(tk.Frame):
         def createUser(userName, password, address, passportNumber, email, contact):
                 db = dbOperations()
                 try:
-                        db.registerAdmin(userName, address, balance, passportNumber, email, contact)
+                        db.registerAdmin(userName, address, 0, passportNumber, email, contact)
                         tkinter.messagebox.showinfo('Success', 'Successfully created an Admin')
+                        globalRef.adminList.insert(END, 'New : ' + ' ( name ) ' + str(userName) + '  ( Address ) ' + str(address) + '   ( Passport )  '+ str(passportNumber)  ) 
+
                         controller.show_frame('Dashboard')
                 except Exception as ex:
                         tkinter.messagebox.showerror(title="Adding Failed", message= str(ex) )
@@ -258,9 +268,6 @@ class LoginPage(tk.Frame):
         
 
 
-        
-        
-       
 
 class Dashboard(tk.Frame):
 
@@ -275,7 +282,7 @@ class Dashboard(tk.Frame):
         title=Label(self, text="USER LIST", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
 
         listbox = Listbox(self)
-        listbox.place(x=50,y=110, width=400, height=150) 
+        listbox.place(x=50,y=110, width=900, height=150) 
         scrollbar = Scrollbar(self) 
         scrollbar.place(x=520,y=110,height=150)  
         
@@ -285,22 +292,32 @@ class Dashboard(tk.Frame):
         i = 0
         for values in allUser: 
                 i+=1
-                listbox.insert(END, str(i) + ' ( name ) ' + values["userName"] + '  ( Address ) ' + values["address"] + '   ( Passport )  '+ values["passportNumber"] + '   ( Amount )   $'  + str(values["balance"]) ) 
+                listbox.insert(END, str(i) + ' ( name ) ' + str(values["userName"]) + '  ( Address ) ' + str(values["address"]) + '   ( Passport )  '+ str(values["passportNumber"]) + '   ( Amount )   $'  + str(values["balance"]) ) 
         listbox.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox.yview) 
 
         title=Label(self, text="ADMIN LIST", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=270)
 
         listbox1 = Listbox(self)
-        listbox1.place(x=50,y=290, width=400, height=150) 
+        listbox1.place(x=50,y=290, width=700, height=150) 
         scrollbar = Scrollbar(self) 
         scrollbar.place(x=520,y=290,height=150)  
 
-        for values in range(20): 
-                listbox1.insert(END, values) 
+        j = 0
+        for values in allAdmin: 
+                j+=1
+                listbox1.insert(END, str(j) + ' ( name ) ' + str(values["userName"]) + '  ( Address ) ' + str(values["address"]) + '   ( Passport )  '+ str(values["passportNumber"])  ) 
+
+        def userProfile():
+                current_passport = dbOperations.currnetPassport
+                controller.show_frame("EditUser")
+
 
         listbox1.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox1.yview) 
+
+        globalRef.userList= listbox
+        globalRef.adminList = listbox1
 
         button08 = tk.Button(self, text="go to home page",
                             command=lambda: controller.show_frame("HomePage"))

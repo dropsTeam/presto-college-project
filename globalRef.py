@@ -1,0 +1,5 @@
+
+class GlobalRef:
+    
+    userList=''
+    adminList=''
