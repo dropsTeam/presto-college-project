@@ -2,6 +2,7 @@ try:
     import tkinter as tk                # python 3
     from tkinter import font as tkfont
     from tkinter import*
+    import tkinter.messagebox
     from PIL import Image,ImageTk 
     from dbOperations import dbOperations
   # python 3
@@ -41,6 +42,9 @@ class SampleApp(tk.Tk):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()
+
+
+
 
 
 class HomePage(tk.Frame):
@@ -179,21 +183,22 @@ class AdminUser(tk.Frame):
 class LoginPage(tk.Frame):
 
     def __init__(self, parent, controller):
+       
+        
         tk.Frame.__init__(self, parent)
-        self.controller = controller
-        self.UI()
         
 
-    def loginAdmin(self):
+
+        
+        def loginAdmin( passport, password):
             db = dbOperations()
-            if db.loginAdmin(self.txt_passportNo.get(), self.txt_passwordName.get()):
-                self.controller.show_frame("Dashboard")
+            if db.loginAdmin(passport, password):
+                controller.show_frame("Dashboard")
             else:
-                tk.messagebox.showerror(title="Login Failed", message="Wrong Information")
+                
+                tkinter.messagebox.showerror(title="Login Failed", message="Wrong Information, try with correct passport and password")
 
-        
-    
-    def UI(self):
+
         self.bg=ImageTk.PhotoImage(file="images/pexels-felix-mittermeier-956999.jpg")
         bg=Label(self,image=self.bg).place(x=0,y=0, relwidth=1,relheight=1)
 
@@ -206,13 +211,18 @@ class LoginPage(tk.Frame):
         title=Label(self, text="LOGIN HERE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
-        self.txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke").place(x=50,y=200, width=250)
+        txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_passportNo.place(x=50,y=200, width=250)
 
         passwordName=Label(self, text="Password", font=("arial", 12),bg="white", fg="green").place(x=50, y=310)
-        self.txt_passwordName=Entry(self, font=("arial",15),bg="whitesmoke").place(x=50,y=340, width=250)
+        txt_passwordName= Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_passwordName.place(x=50,y=340, width=250)
 
-        button = tk.Button(self, text="Login Now", command= lambda: self.loginAdmin() )
+
+        button = tk.Button(self, text="Login Now", command= lambda: loginAdmin( txt_passportNo.get() , txt_passwordName.get())  )
         button.pack()
+        
+        
 
 
         
