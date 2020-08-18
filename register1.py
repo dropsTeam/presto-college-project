@@ -25,7 +25,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (HomePage, UserRegister, AdminUser, Dashboard, LoginPage):
+        for F in (HomePage, UserRegister, AdminUser, Dashboard, LoginPage, EditAdmin, EditUser):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -48,6 +48,7 @@ class HomePage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        controller.geometry("1350x700")
         label = tk.Label(self, text="dis is the start page", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
 
@@ -234,7 +235,7 @@ class Dashboard(tk.Frame):
 
         for values in range(20): 
                 listbox1.insert(END, values) 
-                
+
         listbox1.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox1.yview) 
 
@@ -244,10 +245,35 @@ class Dashboard(tk.Frame):
 
         btn_addAdmin = tk.Button(self, text="Add Admin",
                             command=lambda: controller.show_frame("AdminUser") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1 ).place(x=560,y=120)
+
         btn_addUser = tk.Button(self, text="Add User",command=lambda: controller.show_frame("UserRegister") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=170)
+        
+        btn_editUser = tk.Button(self, text="Edit User",command=lambda: controller.show_frame("EditUser") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=300)
+        
+        btn_editAdmin = tk.Button(self, text="Edit Admin",command=lambda: controller.show_frame("EditAdmin") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=370)
 
 
+class EditUser(tk.Frame):
 
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+
+        title=Label(self, text="EDIT USER PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
+
+        title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
+
+        
+class EditAdmin(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        
+
+        title=Label(self, text="EDIT ADMIN PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
+
+        title=Label(self, text="ADMIN DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
 
 
 
