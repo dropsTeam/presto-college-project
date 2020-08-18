@@ -286,6 +286,10 @@ class EditUser(tk.Frame):
 
         title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
 
+        button = tk.Button(self, text="Go to Dashboard",
+                           command=lambda: controller.show_frame("Dashboard"))
+        button.pack()
+
         
 class EditAdmin(tk.Frame):
 
@@ -297,6 +301,11 @@ class EditAdmin(tk.Frame):
         title=Label(self, text="EDIT ADMIN PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="ADMIN DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
+
+
+        button = tk.Button(self, text="Go to Dashboard",
+                           command=lambda: controller.show_frame("Dashboard"))
+        button.pack()
 
 
 
