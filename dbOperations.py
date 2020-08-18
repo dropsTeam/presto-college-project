@@ -10,7 +10,7 @@ class dbOperations:
         self.__db = connection['teamdatabase']
         self.__userCollection = self.__db['users']
 
-        if( len(self.__userCollection.find({"isAdmin": True})) == 0 ):
+        if( self.__userCollection.find({"isAdmin": True}).count() == 0 ):
             self.registerAdmin("Sagara Samarawickrama","12345", "Address not added", "P00000", "Canada", "abc@gmail.com", 123456789 )
 
 
@@ -71,6 +71,7 @@ class dbOperations:
             self.__userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "country": country, "email": email, "contact": contact})
         else:
             raise Exception("User Not found!")
+
 
     def getAllUsers(self):
         return self.__userCollection.find({"isAdmin": False})

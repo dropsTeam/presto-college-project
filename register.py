@@ -1,12 +1,21 @@
 from tkinter import*
 from PIL import Image,ImageTk 
+from dbOperations import dbOperations
+
+
+
 class Register:
+
     def __init__(self,root):
         self.root=root
         self.root.title("REGISTER WINDOW")
         self.root.geometry("1350x700+0+0")
         self.root.config(bg="white")
+        self.db = dbOperations()
+        self.UI()
 
+
+    def UI(self):
         self.bg=ImageTk.PhotoImage(file="images/pexels-felix-mittermeier-956999.jpg")
         bg=Label(self.root,image=self.bg).place(x=0,y=0, relwidth=1,relheight=1)
 
@@ -50,8 +59,8 @@ class Register:
         check=Checkbutton(frameOne,text="I Agree to the terms and conditon",onvalue=1,offvalue=0,bg="white",font=("arial",12)).place(x=50, y=380)
 
 
-        btn_register=Button(frameOne, text="Register Now",font=("arial",20),bg="whitesmoke" ,bd=0,cursor="hand2").place(x=50,y=420)
-        btn_login=Button(frameOne, text="Sign In",font=("arial",20),bg="whitesmoke" ,bd=0,cursor="hand2").place(x=250,y=420)
+        btn_register=Button(frameOne, text="Register Now" ,font=("arial",20),bg="whitesmoke" ,bd=0,cursor="hand2").place(x=50,y=420)
+
 
 
 root=Tk()

@@ -33,7 +33,6 @@ def _update():
     print('Done !!')
 
 
-
 def _read():
     try:
         name = input('PLease enter the student name: ')
