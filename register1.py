@@ -268,6 +268,8 @@ class Dashboard(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
+        db = dbOperations()
+
         title=Label(self, text="PROFILE VIEW", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="USER LIST", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
@@ -276,9 +278,14 @@ class Dashboard(tk.Frame):
         listbox.place(x=50,y=110, width=400, height=150) 
         scrollbar = Scrollbar(self) 
         scrollbar.place(x=520,y=110,height=150)  
-
-        for values in range(20): 
-                listbox.insert(END, values) 
+        
+        allAdmin = db.getAllAdmin()
+        allUser = db.getAllUsers()
+        
+        i = 0
+        for values in allUser: 
+                i+=1
+                listbox.insert(END, str(i) + ' ( name ) ' + values["userName"] + '  ( Address ) ' + values["address"] + '   ( Passport )  '+ values["passportNumber"] + '   ( Amount )   $'  + str(values["balance"]) ) 
         listbox.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox.yview) 
 
