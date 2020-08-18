@@ -351,7 +351,7 @@ class EditUser(tk.Frame):
                 else:
                         if dbOperations.deleteUser(current_passport):
                                 tkinter.messagebox.showinfo(title="Done !", message="Successfully deleted!")
-                                globalRef.userList.delete()
+                                globalRef.userList.delete(userIndex.index( str(current_passport) ))
                                 controller.show_frame("Dashboard")
                         else:
                                 tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
