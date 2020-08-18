@@ -40,7 +40,7 @@ class dbOperations:
             return False
     
 
-    
+
     def registerAdmin(self, userName, password, address, passportNumber, email, contact):
         
         if len(password) < 5:

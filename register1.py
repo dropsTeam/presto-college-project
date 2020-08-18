@@ -296,8 +296,12 @@ class Dashboard(tk.Frame):
         scrollbar = Scrollbar(self) 
         scrollbar.place(x=520,y=290,height=150)  
 
-        for values in range(20): 
-                listbox1.insert(END, values) 
+        j = 0
+        for values in allAdmin: 
+                j+=1
+                listbox1.insert(END, str(j) + ' ( name ) ' + values["userName"] + '  ( Address ) ' + values["address"] + '   ( Passport )  '+ values["passportNumber"]  ) 
+
+       
 
         listbox1.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox1.yview) 
