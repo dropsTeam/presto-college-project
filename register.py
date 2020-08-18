@@ -33,8 +33,9 @@ class Register:
         frameOne.place(x=480,y=100,width=700,height=500)
 
         title=Label(frameOne, text="REGISTER HERE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
-        
+
 # ------------111111111111111111-------------------------------------------------------
+        
         firstName=Label(frameOne, text="First Name", font=("arial", 12),bg="white", fg="green").place(x=50, y=100)
         self.txt_firstName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=130, width=250)
 
