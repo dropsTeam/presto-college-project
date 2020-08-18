@@ -52,6 +52,7 @@ class SampleApp(tk.Tk):
 
 
 
+
 class HomePage(tk.Frame):
 
     def __init__(self, parent, controller):
