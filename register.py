@@ -14,6 +14,12 @@ class Register:
         self.db = dbOperations()
         self.UI()
 
+    def adminRegister(self):
+            try:
+                self.db.registerAdmin(self.txt_firstName+ self.txt_lastName, self.txt_passwordName, self.txt_address, self.txt_passportNo, self.txt_emailId, self.txt_contactName)    
+            except NameError:
+                    print(NameError)
+
 
     def UI(self):
         self.bg=ImageTk.PhotoImage(file="images/pexels-felix-mittermeier-956999.jpg")
@@ -28,32 +34,32 @@ class Register:
         title=Label(frameOne, text="REGISTER HERE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 # --------------------------------------------------------------------
         firstName=Label(frameOne, text="First Name", font=("arial", 12),bg="white", fg="green").place(x=50, y=100)
-        txt_firstName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=130, width=250)
+        self.txt_firstName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=130, width=250)
 
         lastName=Label(frameOne, text="Last Name", font=("arial", 12),bg="white", fg="green").place(x=370, y=100)
-        txt_lastName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=130, width=250)
+        self.txt_lastName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=130, width=250)
 
 # ------------------------------------------------------------------
         passportNo=Label(frameOne, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
-        txt_passportNo=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=200, width=250)
+        self.txt_passportNo=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=200, width=250)
 
         address=Label(frameOne, text="Address", font=("arial", 12),bg="white", fg="green").place(x=370, y=170)
-        txt_address=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=200, width=250)
+        self.txt_address=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=200, width=250)
 
 # ------------------------------------------------------------------
         
         contactName=Label(frameOne, text="Mobile No", font=("arial", 12),bg="white", fg="green").place(x=50, y=240)
-        txt_contactName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=270, width=250)
+        self.txt_contactName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=270, width=250)
 
         emailId=Label(frameOne, text="Email Id", font=("arial", 12),bg="white", fg="green").place(x=370, y=240)
-        txt_emailId=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=270, width=250)
+        self.txt_emailId=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=270, width=250)
 
 # ------------------------------------------------------------------
         passwordName=Label(frameOne, text="Password", font=("arial", 12),bg="white", fg="green").place(x=50, y=310)
-        txt_passwordName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=340, width=250)
+        self.txt_passwordName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=50,y=340, width=250)
 
         confirmName=Label(frameOne, text="Confirm Password", font=("arial", 12),bg="white", fg="green").place(x=370, y=310)
-        txt_confirmName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=340, width=250)
+        self.txt_confirmName=Entry(frameOne, font=("arial",15),bg="whitesmoke").place(x=370,y=340, width=250)
 # ------------------------------------------------------------------
 
         check=Checkbutton(frameOne,text="I Agree to the terms and conditon",onvalue=1,offvalue=0,bg="white",font=("arial",12)).place(x=50, y=380)

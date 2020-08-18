@@ -38,7 +38,7 @@ class dbOperations:
     
 
     
-    def registerAdmin(self, userName, password, address, passportNumber, country, email, contact):
+    def registerAdmin(self, userName, password, address, passportNumber, email, contact):
         
         if len(password) < 5:
             raise Exception("Password should be atleast 5 char long")
@@ -46,15 +46,15 @@ class dbOperations:
             raise Exception("User Already exist, try with diffent passport number.")
         else:
             hashed = bcrypt.kdf( password= password, salt='salt', desired_key_bytes=32, rounds=100)
-            self.__userCollection.insert_one({"userName": userName, "password": hashed, "isAdmin": True, "balance": 0, "address": address, "country": country, "passportNumber": passportNumber, "email": email, "contact": contact})
+            self.__userCollection.insert_one({"userName": userName, "password": hashed, "isAdmin": True, "balance": 0, "address": address, "passportNumber": passportNumber, "email": email, "contact": contact})
     
     
-    def addUser(self, userName, address, balance, country, passportNumber, email, contact):
+    def addUser(self, userName, address, balance, passportNumber, email, contact):
         
         if( self.isUserExist(passportNumber, False) ): 
             raise Exception("User Already exist, try with different passport number.")
         else:
-            self.__userCollection.insert_one({"userName": userName, "isAdmin": False, "balance": balance, "address": address, "country": country, "passportNumber": passportNumber, "email": email, "contact": contact})
+            self.__userCollection.insert_one({"userName": userName, "isAdmin": False, "balance": balance, "address": address, "passportNumber": passportNumber, "email": email, "contact": contact})
     
 
     def addFunds(self, passportNumber, balance):
@@ -65,10 +65,10 @@ class dbOperations:
             raise Exception("User not found!")
     
     
-    def editUser(self, passportNumber, userName, address, balance, country, email, contact):
+    def editUser(self, passportNumber, userName, address, balance, email, contact):
         
         if self.isUserExist(passportNumber):
-            self.__userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "country": country, "email": email, "contact": contact})
+            self.__userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact})
         else:
             raise Exception("User Not found!")
 
