@@ -199,8 +199,15 @@ class LoginPage(tk.Frame):
         self.txt_passwordName=Entry(self, font=("arial",15),bg="whitesmoke").place(x=50,y=340, width=250)
 
         button = tk.Button(self, text="Login Now",
-                            command=lambda: controller.show_frame("Dashboard"))
+                            command=lambda: self.login())
         button.pack()
+
+    def login(self):
+            db = dbOperations()
+            if db.loginAdmin(self.txt_passportNo, self.txt_passwordName):
+                self.controller.show_frame("Dashboard")
+            else:
+                tk.messagebox.showerror(title="Login Failed", message="Wrong Information")
         
         
        
