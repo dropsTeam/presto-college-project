@@ -19,7 +19,7 @@ class Register:
             try:
                 self.db.registerAdmin(self.txt_firstName + self.txt_lastName, self.txt_passwordName, self.txt_address, self.txt_passportNo, self.txt_emailId, self.txt_contactName)    
             except NameError:
-                    print(NameError)
+                print(NameError)
 
 
     def UI(self):
@@ -72,7 +72,7 @@ class Register:
         btn_register=Button(frameOne, text="Register Now" ,font=("arial",20),bg="whitesmoke" ,bd=0,cursor="hand2").place(x=50,y=420)
 
 
-
 root=Tk()
 obj=Register(root)
 root.mainloop()
+
