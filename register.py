@@ -14,9 +14,10 @@ class Register:
         self.db = dbOperations()
         self.UI()
 
+
     def adminRegister(self):
             try:
-                self.db.registerAdmin(self.txt_firstName+ self.txt_lastName, self.txt_passwordName, self.txt_address, self.txt_passportNo, self.txt_emailId, self.txt_contactName)    
+                self.db.registerAdmin(self.txt_firstName + self.txt_lastName, self.txt_passwordName, self.txt_address, self.txt_passportNo, self.txt_emailId, self.txt_contactName)    
             except NameError:
                     print(NameError)
 
