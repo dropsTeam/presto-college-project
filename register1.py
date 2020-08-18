@@ -364,7 +364,7 @@ class EditUser(tk.Frame):
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
         deleteUser = tk.Button(self, text="Delete User",
-                           command=lambda: controller.show_frame("Dashboard"))
+                           command=lambda: deleteUser())
         button.pack()
 
         
