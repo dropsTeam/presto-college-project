@@ -163,7 +163,7 @@ class AdminUser(tk.Frame):
                 db = dbOperations()
                 try:
                         adminIndex.append(passportNumber)
-                        db.registerAdmin(userName, address, 0, passportNumber, email, contact)
+                        db.registerAdmin(userName, password, address, passportNumber, email, contact)
                         tkinter.messagebox.showinfo('Success', 'Successfully created an Admin')
                         globalRef.adminList.insert(END, 'New : ' + ' ( name ) ' + str(userName) + '  ( Address ) ' + str(address) + '   ( Passport )  '+ str(passportNumber)  ) 
 
