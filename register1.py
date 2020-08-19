@@ -64,13 +64,13 @@ class HomePage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         controller.geometry("1350x700")
-        label = tk.Label(self, text="dis is the start page", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        label = tk.Label(self, text="BUS TRANSIT SOFTWARE", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=20)
 
         
-        button6 = tk.Button(self, text="Login Here",
+        button6 = tk.Button(self, text="Login Here",font=("caliber heading",17),bg="whitesmoke", fg="green",
                             command=lambda: controller.show_frame("LoginPage"))
-        button6.place(x=700,y=350, height=50, width=200)
+        button6.place(x=550,y=200, height=50, width=200)
 
 
 class UserRegister(tk.Frame):
@@ -260,17 +260,17 @@ class LoginPage(tk.Frame):
 
         title=Label(self, text="LOGIN HERE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
-        passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
+        passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=100)
         txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke")
-        txt_passportNo.place(x=50,y=200, width=250)
+        txt_passportNo.place(x=50,y=130, width=250)
 
-        passwordName=Label(self, text="Password", font=("arial", 12),bg="white", fg="green").place(x=50, y=310)
+        passwordName=Label(self, text="Password", font=("arial", 12),bg="white", fg="green").place(x=50, y=180)
         txt_passwordName= Entry(self, font=("arial",15),bg="whitesmoke")
-        txt_passwordName.place(x=50,y=340, width=250)
+        txt_passwordName.place(x=50,y=210, width=250)
 
 
-        button = tk.Button(self, text="Login Now", command= lambda: loginAdmin( txt_passportNo.get() , txt_passwordName.get())  )
-        button.pack()
+        button = tk.Button(self, text="Login Now",font=("arial", 14),bg="white", fg="green", command= lambda: loginAdmin( txt_passportNo.get() , txt_passwordName.get())  )
+        button.place(x=50, y=270, height=50, width=200)
         
         
 
@@ -338,20 +338,20 @@ class Dashboard(tk.Frame):
         globalRef.userList= listbox
         globalRef.adminList = listbox1
 
-        button08 = tk.Button(self, text="LOG OUT",
+        button08 = tk.Button(self, text="LOG OUT",font=("caliber heading",17),bg="whitesmoke", fg="green",
                             command=lambda: controller.show_frame("HomePage"))
         button08.place(x=550,y=500,height=50, width=220 )
 
         
 
-        btn_addUser = tk.Button(self, text="Add User",command=lambda: controller.show_frame("UserRegister") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=120)
+        btn_addUser = tk.Button(self, text="Add User",command=lambda: controller.show_frame("UserRegister") ,font=("arial",12), bg="white",fg="red" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=120)
         
-        btn_editUser = tk.Button(self, text="Edit User",command= userProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=170)
+        btn_editUser = tk.Button(self, text="Edit User",command= userProfile ,font=("arial",12),bg="white",fg="green" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=170)
         
         btn_addAdmin = tk.Button(self, text="Add Admin",
-                            command=lambda: controller.show_frame("AdminUser") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1 ).place(x=585,y=300)
+                            command=lambda: controller.show_frame("AdminUser") ,font=("arial",12),bg="white",fg="red" ,bd=0,cursor="hand2", width=10, height=1 ).place(x=585,y=300)
 
-        btn_editAdmin = tk.Button(self, text="Edit Admin",command=adminProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=370)
+        btn_editAdmin = tk.Button(self, text="Edit Admin",command=adminProfile ,font=("arial",12),bg="white",fg="green" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=370)
 
 
 class EditUser(tk.Frame):
