@@ -4,8 +4,8 @@ from pymongo import MongoClient
 
 
 class dbOperations:
-
-    currnetPassport = ''
+    
+     currnetPassport = ''
 
     def __init__(self):
 
@@ -37,7 +37,6 @@ class dbOperations:
         if (self.isUserExist(passportNumber, True)):
             user = self.findUser(passportNumber, True)
             if user["password"] == password:
-                self.currnetPassport = passportNumber
                 return True
             else:
                 return False
@@ -79,6 +78,7 @@ class dbOperations:
             self.userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact})
         else:
             raise Exception("User Not found!")
+
     
     def deleteUser(self, passportNumber):
         try:
@@ -88,6 +88,7 @@ class dbOperations:
         except Exception as ex:
             print(ex)
             return False
+
 
     def getAllUsers(self):
         return self.userCollection.find({"isAdmin": False})
