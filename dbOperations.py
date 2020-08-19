@@ -4,8 +4,8 @@ from pymongo import MongoClient
 
 
 class dbOperations:
-    
-     currnetPassport = ''
+
+    currnetPassport = ''
 
     def __init__(self):
         connection = MongoClient('localhost:27017')

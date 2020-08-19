@@ -378,6 +378,9 @@ class EditUser(tk.Frame):
                                 tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
                    
 
+        def editt():
+                dbOperations.editUser(txt_passportNo.get(), txt_firstName.get() + ' ' + txt_lastName.get(), txt_address.get(), txt_addFunds.get(), txt_emailId.get(), txt_contactName.get())
+        
         title=Label(self, text="EDIT USER PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
@@ -432,7 +435,9 @@ class EditUser(tk.Frame):
         txt_addFunds.place(x=50,y=340, width=250)
 
 
-        btn_editUserdata=Button(self, text="EDIT USER DETAILS" ,font=("arial",20),bg="whitesmoke" , command= lambda: createUser( txt_firstName.get() + ' ' + txt_lastName.get(), txt_passwordName.get(), txt_address.get(), txt_passportNo.get() , txt_emailId.get() , txt_contactName.get()), bd=0,cursor="hand2" ).place(x=50,y=400)
+
+
+        btn_editUserdata=Button(self, text="EDIT USER DETAILS" ,font=("arial",20),bg="whitesmoke" , command= editt, bd=0,cursor="hand2" ).place(x=50,y=400)
 
 
        
@@ -515,7 +520,7 @@ class EditAdmin(tk.Frame):
         txt_emailId.place(x=370,y=270, width=250)
 
 
-        btn_editUserdata=Button(self, text="EDIT ADMIN DETAILS" ,font=("arial",20),bg="whitesmoke" , command= lambda: createUser( txt_firstName.get() + ' ' + txt_lastName.get(), txt_passwordName.get(), txt_address.get(), txt_passportNo.get() , txt_emailId.get() , txt_contactName.get()), bd=0,cursor="hand2" ).place(x=50,y=400)
+        btn_editAdmindata=Button(self, text="EDIT ADMIN DETAILS" ,font=("arial",20),bg="whitesmoke" , command= lambda: createUser( txt_firstName.get() + ' ' + txt_lastName.get(), txt_passwordName.get(), txt_address.get(), txt_passportNo.get() , txt_emailId.get() , txt_contactName.get()), bd=0,cursor="hand2" ).place(x=50,y=400)
 
 
 
