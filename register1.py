@@ -70,7 +70,7 @@ class HomePage(tk.Frame):
         
         button6 = tk.Button(self, text="Login Here",
                             command=lambda: controller.show_frame("LoginPage"))
-        button6.pack()
+        button6.place(x=700,y=350, height=50, width=200)
 
 
 class UserRegister(tk.Frame):

@@ -8,15 +8,12 @@ class dbOperations:
      currnetPassport = ''
 
     def __init__(self):
-
         connection = MongoClient('localhost:27017')
         self.__db = connection['teamdatabase']
         self.userCollection = self.__db['users']
 
         if( self.userCollection.find({"isAdmin": True}).count() == 0 ):
             self.registerAdmin("Sagara Samarawickrama","12345", "Address not added", "P00000", "abc@gmail.com", 123456789 )
-
-
 
 
     def isUserExist(self, passportNumber, isAdmin):
