@@ -82,6 +82,7 @@ class dbOperations:
     
     def deleteUser(self, passportNumber):
         try:
+            print(passportNumber)
             self.userCollection.delete_many({"passportNumber": passportNumber})
             return True
         except Exception as ex:
