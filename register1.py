@@ -21,6 +21,7 @@ adminIndex = []
 userIndex = []
 
 
+
 class SampleApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
@@ -322,13 +323,14 @@ class Dashboard(tk.Frame):
         def userProfile():
                 
                 
-                globalRef.current_passport = userIndex[int(str(globalRef.userList.curselection())[1:-2])] 
+                globalRef.current_passport = userIndex[int(str(globalRef.userList.curselection())[1:-2])]
                 
                 controller.show_frame("EditUser")
         
         def adminProfile():
                 
                 globalRef.current_passport = adminIndex[int(str(globalRef.adminList.curselection())[1:-2])] 
+                print(globalRef.current_passport) 
                 
                 controller.show_frame("EditAdmin")
 
@@ -379,8 +381,19 @@ class EditUser(tk.Frame):
                    
 
         def editt():
-                dbOperations.editUser(txt_passportNo.get(), txt_firstName.get() + ' ' + txt_lastName.get(), txt_address.get(), txt_addFunds.get(), txt_emailId.get(), txt_contactName.get())
-        
+                
+                try:
+                        db = dbOperations()
+                        db.editUser( globalRef.current_passport , txt_firstName.get() + ' ' + txt_lastName.get(), txt_address.get(), txt_addFunds.get(), txt_emailId.get(), txt_contactName.get())
+                        globalRef.userList.delete(userIndex.index( globalRef.current_passport))
+                        globalRef.userList.insert(END,  'New : ( name ) ' + txt_firstName.get() + ' ' + txt_lastName.get() + '  ( Address ) ' + txt_address.get() + '   ( Passport )  '+ globalRef.current_passport + '   ( Amount )   $'  + str( txt_addFunds ) ) 
+                        tkinter.messagebox.showinfo(title="Success!!", message="User Edited!!")
+                        controller.show_frame("Dashboard")
+
+                except Exception as ex:
+                        print(ex)
+                        tkinter.messagebox.showerror(title="Error Occured", message="Error Occured updating the user")
+
         title=Label(self, text="EDIT USER PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
@@ -470,6 +483,7 @@ class EditAdmin(tk.Frame):
                                 tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
        
 
+                
         title=Label(self, text="EDIT ADMIN PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="ADMIN DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
@@ -519,8 +533,21 @@ class EditAdmin(tk.Frame):
         txt_emailId=Entry(self, font=("arial",15),bg="whitesmoke")
         txt_emailId.place(x=370,y=270, width=250)
 
+        def editt():
+                
+                try:
+                        db = dbOperations()
+                        db.editAdmin( globalRef.current_passport , txt_firstName.get() + ' ' + txt_lastName.get(), txt_address.get(), 0, txt_emailId.get(), txt_contactName.get())
+                        globalRef.adminList.delete(adminIndex.index( globalRef.current_passport))
+                        globalRef.adminList.insert(END,  'New : ( name ) ' + txt_firstName.get() + ' ' + txt_lastName.get() + '  ( Address ) ' + txt_address.get() + '   ( Passport )  '+ globalRef.current_passport  ) 
+                        tkinter.messagebox.showinfo(title="Success!!", message="Admin Edited!!")
+                        controller.show_frame("Dashboard")
 
-        btn_editAdmindata=Button(self, text="EDIT ADMIN DETAILS" ,font=("arial",20),bg="whitesmoke" , command= lambda: createUser( txt_firstName.get() + ' ' + txt_lastName.get(), txt_passwordName.get(), txt_address.get(), txt_passportNo.get() , txt_emailId.get() , txt_contactName.get()), bd=0,cursor="hand2" ).place(x=50,y=400)
+                except Exception as ex:
+                        print(ex)
+                        tkinter.messagebox.showerror(title="Error Occured", message="Error Occured updating the user")
+
+        btn_editAdmindata=Button(self, text="EDIT ADMIN DETAILS" ,font=("arial",20),bg="whitesmoke" , command= editt, bd=0,cursor="hand2" ).place(x=50,y=400)
 
 
 

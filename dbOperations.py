@@ -3,7 +3,7 @@ from pymongo import MongoClient
 
 
 
-class dbOperations:
+class dbOperations():
 
     currnetPassport = ''
 
@@ -74,8 +74,15 @@ class dbOperations:
     
     def editUser(self, passportNumber, userName, address, balance, email, contact):
         
-        if self.isUserExist(passportNumber):
-            self.userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact})
+        if self.isUserExist(passportNumber, False):
+            self.userCollection.update_one({"passportNumber": passportNumber},{"$set": {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact}} )
+        else:
+            raise Exception("User Not found!")
+    
+    def editAdmin(self, passportNumber, userName, address, balance, email, contact):
+        
+        if self.isUserExist(passportNumber, True):
+            self.userCollection.update_one({"passportNumber": passportNumber},{"$set": {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact}} )
         else:
             raise Exception("User Not found!")
 
