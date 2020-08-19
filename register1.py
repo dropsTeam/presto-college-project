@@ -6,6 +6,7 @@ try:
     from PIL import Image,ImageTk 
     from dbOperations import dbOperations
     from globalRef import GlobalRef
+    from pymongo import MongoClient
   # python 3
 except ImportError:
     import Tkinter as tk     # python 2
@@ -80,9 +81,11 @@ class UserRegister(tk.Frame):
         def createUser(userName, address, balance, passportNumber, email, contact):
                 db = dbOperations()
                 try:
+                        
                         db.addUser(userName, address, balance, passportNumber, email, contact)
                         tkinter.messagebox.showinfo('Success', 'Successfully created')
                         globalRef.userList.insert(END, 'New : ' + ' ( name ) ' + str(userName) + '  ( Address ) ' + str(address) + '   ( Passport )  '+ str(passportNumber) + '   ( Amount )   $'  + str(0) ) 
+                        userIndex.append(passportNumber)
                         controller.show_frame('Dashboard')
                 except Exception as ex:
                         tkinter.messagebox.showerror(title="Adding Failed", message= str(ex) )
@@ -159,7 +162,8 @@ class AdminUser(tk.Frame):
         def createUser(userName, password, address, passportNumber, email, contact):
                 db = dbOperations()
                 try:
-                        db.registerAdmin(userName, address, 0, passportNumber, email, contact)
+                        adminIndex.append(passportNumber)
+                        db.registerAdmin(userName, password, address, passportNumber, email, contact)
                         tkinter.messagebox.showinfo('Success', 'Successfully created an Admin')
                         globalRef.adminList.insert(END, 'New : ' + ' ( name ) ' + str(userName) + '  ( Address ) ' + str(address) + '   ( Passport )  '+ str(passportNumber)  ) 
 
@@ -304,6 +308,7 @@ class Dashboard(tk.Frame):
 
         listbox1 = Listbox(self)
         listbox1.place(x=50,y=290, width=700, height=150) 
+        
         scrollbar = Scrollbar(self) 
         scrollbar.place(x=520,y=290,height=150)  
 
@@ -315,9 +320,17 @@ class Dashboard(tk.Frame):
 
 
         def userProfile():
-                current_passport = dbOperations.currnetPassport
+                
+                
+                globalRef.current_passport = userIndex[int(str(globalRef.userList.curselection())[1:-2])] 
+                
                 controller.show_frame("EditUser")
-
+        
+        def adminProfile():
+                
+                globalRef.current_passport = adminIndex[int(str(globalRef.adminList.curselection())[1:-2])] 
+                
+                controller.show_frame("EditAdmin")
 
         listbox1.config(yscrollcommand = scrollbar.set) 
         scrollbar.config(command = listbox1.yview) 
@@ -334,9 +347,9 @@ class Dashboard(tk.Frame):
 
         btn_addUser = tk.Button(self, text="Add User",command=lambda: controller.show_frame("UserRegister") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=170)
         
-        btn_editUser = tk.Button(self, text="Edit User",command=lambda: controller.show_frame("EditUser") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=300)
+        btn_editUser = tk.Button(self, text="Edit User",command= userProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=300)
         
-        btn_editAdmin = tk.Button(self, text="Edit Admin",command=lambda: controller.show_frame("EditAdmin") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=370)
+        btn_editAdmin = tk.Button(self, text="Edit Admin",command=adminProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=370)
 
 
 class EditUser(tk.Frame):
@@ -345,28 +358,37 @@ class EditUser(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        def deleteUser():
-                if current_passport == dbOperations.currnetPassport:
+        def deleteUserH():
+                if globalRef.current_passport == dbOperations.currnetPassport:
                         tkinter.messagebox.showerror(title="Error !", message="You cannot delete yourself !")
 
                 else:
-                        if dbOperations.deleteUser(current_passport):
-                                tkinter.messagebox.showinfo(title="Done !", message="Successfully deleted!")
-                                globalRef.userList.delete(userIndex.index( str(current_passport) ))
-                                controller.show_frame("Dashboard")
-                        else:
-                                tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
+                        try:
+                                connection = MongoClient('localhost:27017')
+                                db = connection['teamdatabase']['users']
 
+                                db.delete_many({"passportNumber": globalRef.current_passport})
+                                tkinter.messagebox.showinfo(title="Done !", message="Successfully deleted!")
+                                globalRef.userList.delete(userIndex.index( globalRef.current_passport))
+                                controller.show_frame("Dashboard") 
+                        except Exception as ex:
+                                print(ex)
+                                tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
+                   
 
         title=Label(self, text="EDIT USER PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
 
+       
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
-        deleteUser = tk.Button(self, text="Delete User",
-                           command=lambda: deleteUser())
+
         button.pack()
+        deleteUser = tk.Button(self, text="Delete User",
+                           command= deleteUserH )
+        deleteUser.pack()
+
 
         
 class EditAdmin(tk.Frame):
@@ -374,7 +396,25 @@ class EditAdmin(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        
+
+
+        def deleteUserH():
+                if globalRef.current_passport == dbOperations.currnetPassport:
+                        tkinter.messagebox.showerror(title="Error !", message="You cannot delete yourself !")
+
+                else:
+                        try:
+                                connection = MongoClient('localhost:27017')
+                                db = connection['teamdatabase']['users']
+
+                                db.delete_many({"passportNumber": globalRef.current_passport})
+                                tkinter.messagebox.showinfo(title="Done !", message="Successfully deleted!")
+                                globalRef.adminList.delete(adminIndex.index( globalRef.current_passport))
+                                controller.show_frame("Dashboard") 
+                        except Exception as ex:
+                                print(ex)
+                                tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
+       
 
         title=Label(self, text="EDIT ADMIN PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
@@ -384,6 +424,9 @@ class EditAdmin(tk.Frame):
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
         button.pack()
+        deleteUser = tk.Button(self, text="Delete User",
+                           command= deleteUserH )
+        deleteUser.pack()
 
 
 

@@ -11,9 +11,9 @@ class dbOperations:
 
         connection = MongoClient('localhost:27017')
         self.__db = connection['teamdatabase']
-        self.__userCollection = self.__db['users']
+        self.userCollection = self.__db['users']
 
-        if( self.__userCollection.find({"isAdmin": True}).count() == 0 ):
+        if( self.userCollection.find({"isAdmin": True}).count() == 0 ):
             self.registerAdmin("Sagara Samarawickrama","12345", "Address not added", "P00000", "abc@gmail.com", 123456789 )
 
 
@@ -21,14 +21,14 @@ class dbOperations:
 
     def isUserExist(self, passportNumber, isAdmin):
         i = 0
-        for x in self.__userCollection.find({"passportNumber": passportNumber, "isAdmin": isAdmin}, { "limit": 1 }):
+        for x in self.userCollection.find({"passportNumber": passportNumber, "isAdmin": isAdmin}, { "limit": 1 }):
             i+=1
         return i>0
         
 
 
     def findUser(self, passportNumber, isAdmin):
-        return self.__userCollection.find_one({"passportNumber": passportNumber, "isAdmin": isAdmin})
+        return self.userCollection.find_one({"passportNumber": passportNumber, "isAdmin": isAdmin})
     
     
     
@@ -53,7 +53,7 @@ class dbOperations:
             raise Exception("User Already exist, try with diffent passport number.")
         else:
             
-            self.__userCollection.insert_one({"userName": userName, "password": password, "isAdmin": True, "balance": 0, "address": address, "passportNumber": passportNumber, "email": email, "contact": contact})
+            self.userCollection.insert_one({"userName": userName, "password": password, "isAdmin": True, "balance": 0, "address": address, "passportNumber": passportNumber, "email": email, "contact": contact})
     
     
     def addUser(self, userName, address, balance, passportNumber, email, contact):
@@ -61,13 +61,13 @@ class dbOperations:
         if( self.isUserExist(passportNumber, False) ): 
             raise Exception("User Already exist, try with different passport number.")
         else:
-            self.__userCollection.insert_one({"userName": userName, "isAdmin": False, "balance": balance, "address": address, "passportNumber": passportNumber, "email": email, "contact": contact})
+            self.userCollection.insert_one({"userName": userName, "isAdmin": False, "balance": balance, "address": address, "passportNumber": passportNumber, "email": email, "contact": contact})
     
 
     def addFunds(self, passportNumber, balance):
         
         if self.isUserExist(passportNumber, False):
-            self.__userCollection.update_one({"passportNumber": passportNumber}, { "$inc":{ "balance": balance } });
+            self.userCollection.update_one({"passportNumber": passportNumber}, { "$inc":{ "balance": balance } });
         else:
             raise Exception("User not found!")
     
@@ -75,13 +75,23 @@ class dbOperations:
     def editUser(self, passportNumber, userName, address, balance, email, contact):
         
         if self.isUserExist(passportNumber):
-            self.__userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact})
+            self.userCollection.update_one({"passportNumber": passportNumber}, {"userName": userName, "balance": balance, "address": address, "email": email, "contact": contact})
         else:
             raise Exception("User Not found!")
 
+    
+    def deleteUser(self, passportNumber):
+        try:
+            print(passportNumber)
+            self.userCollection.delete_many({"passportNumber": passportNumber})
+            return True
+        except Exception as ex:
+            print(ex)
+            return False
+
 
     def getAllUsers(self):
-        return self.__userCollection.find({"isAdmin": False})
+        return self.userCollection.find({"isAdmin": False})
 
     def getAllAdmin(self):
-        return self.__userCollection.find({"isAdmin": True})
+        return self.userCollection.find({"isAdmin": True})
