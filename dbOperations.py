@@ -4,7 +4,7 @@ from pymongo import MongoClient
 
 
 class dbOperations:
-    
+
     currnetPassport = ''
 
     def __init__(self):
