@@ -386,7 +386,7 @@ class EditUser(tk.Frame):
                         db = dbOperations()
                         db.editUser( globalRef.current_passport , txt_firstName.get() + ' ' + txt_lastName.get(), txt_address.get(), txt_addFunds.get(), txt_emailId.get(), txt_contactName.get())
                         globalRef.userList.delete(userIndex.index( globalRef.current_passport))
-                        globalRef.userList.insert(END,  'New : ( name ) ' + txt_firstName.get() + ' ' + txt_lastName.get() + '  ( Address ) ' + txt_address.get() + '   ( Passport )  '+ globalRef.current_passport + '   ( Amount )   $'  + str( txt_addFunds ) ) 
+                        globalRef.userList.insert(END,  'New : ( name ) ' + txt_firstName.get() + ' ' + txt_lastName.get() + '  ( Address ) ' + txt_address.get() + '   ( Passport )  '+ globalRef.current_passport + '   ( Amount )   $'  + str( txt_addFunds.get() ) ) 
                         tkinter.messagebox.showinfo(title="Success!!", message="User Edited!!")
                         controller.show_frame("Dashboard")
 
@@ -425,8 +425,8 @@ class EditUser(tk.Frame):
         txt_lastName.place(x=370,y=130, width=250)
 
 # ------------222222222222222222222------------------------------------------------------
-        passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
-        txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke")
+        passportNo=Label(self, text="Passport No",state=DISABLED, font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
+        txt_passportNo=Entry(self, state=DISABLED, font=("arial",15),bg="whitesmoke")
         txt_passportNo.place(x=50,y=200, width=250)
 
         address=Label(self, text="Address", font=("arial", 12),bg="white", fg="green").place(x=370, y=170)
@@ -515,8 +515,8 @@ class EditAdmin(tk.Frame):
         txt_lastName.place(x=370,y=130, width=250)
 
 # ------------222222222222222222222------------------------------------------------------
-        passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
-        txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke")
+        passportNo=Label(self, text="Passport No",state=DISABLED, font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
+        txt_passportNo=Entry(self,state=DISABLED, font=("arial",15),bg="whitesmoke")
         txt_passportNo.place(x=50,y=200, width=250)
 
         address=Label(self, text="Address", font=("arial", 12),bg="white", fg="green").place(x=370, y=170)
