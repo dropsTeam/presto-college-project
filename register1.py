@@ -148,7 +148,7 @@ class UserRegister(tk.Frame):
                             command= lambda: controller.show_frame('Dashboard') )
         # button = tk.Button(self, text="Register Now",
         #                     command=lambda: controller.show_frame("Dashboard"))
-        button4.pack()
+        button4.place(x=350,y=420,width=200, height=50)
         # button.pack()
         
 
@@ -228,7 +228,7 @@ class AdminUser(tk.Frame):
 
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
-        button.pack()
+        button.place(x=350,y=420,width=200, height=50)
 
 
 class LoginPage(tk.Frame):
@@ -289,9 +289,9 @@ class Dashboard(tk.Frame):
         title=Label(self, text="USER LIST", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
 
         listbox = Listbox(self)
-        listbox.place(x=50,y=110, width=900, height=150) 
+        listbox.place(x=50,y=110, width=500, height=150) 
         scrollbar = Scrollbar(self) 
-        scrollbar.place(x=520,y=110,height=150)  
+        scrollbar.place(x=560,y=110,height=150)  
         
         allAdmin = db.getAllAdmin()
         allUser = db.getAllUsers()
@@ -307,10 +307,10 @@ class Dashboard(tk.Frame):
         title=Label(self, text="ADMIN LIST", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=270)
 
         listbox1 = Listbox(self)
-        listbox1.place(x=50,y=290, width=700, height=150) 
+        listbox1.place(x=50,y=290, width=500, height=150) 
         
         scrollbar = Scrollbar(self) 
-        scrollbar.place(x=520,y=290,height=150)  
+        scrollbar.place(x=560,y=290,height=150)  
 
         j = 0
         for values in allAdmin: 
@@ -337,18 +337,20 @@ class Dashboard(tk.Frame):
         globalRef.userList= listbox
         globalRef.adminList = listbox1
 
-        button08 = tk.Button(self, text="go to home page",
+        button08 = tk.Button(self, text="LOG OUT",
                             command=lambda: controller.show_frame("HomePage"))
-        button08.pack()
+        button08.place(x=550,y=500,height=50, width=220 )
 
+        
+
+        btn_addUser = tk.Button(self, text="Add User",command=lambda: controller.show_frame("UserRegister") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=120)
+        
+        btn_editUser = tk.Button(self, text="Edit User",command= userProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=170)
+        
         btn_addAdmin = tk.Button(self, text="Add Admin",
-                            command=lambda: controller.show_frame("AdminUser") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1 ).place(x=560,y=120)
+                            command=lambda: controller.show_frame("AdminUser") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1 ).place(x=585,y=300)
 
-        btn_addUser = tk.Button(self, text="Add User",command=lambda: controller.show_frame("UserRegister") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=170)
-        
-        btn_editUser = tk.Button(self, text="Edit User",command= userProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=300)
-        
-        btn_editAdmin = tk.Button(self, text="Edit Admin",command=adminProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=370)
+        btn_editAdmin = tk.Button(self, text="Edit Admin",command=adminProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=585,y=370)
 
 
 class EditUser(tk.Frame):
@@ -379,14 +381,61 @@ class EditUser(tk.Frame):
 
         title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
 
-       
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
 
-        button.pack()
+        button.place(x=120, y=300, height=50, width=220)
+
         deleteUser = tk.Button(self, text="Delete User",
                            command= deleteUserH )
-        deleteUser.pack()
+
+        deleteUser.place(x=120, y=400,height=50, width=220)
+
+
+        self=Frame(self, bg="white")
+        self.place(x=480,y=100,width=700,height=500)
+
+        title=Label(self, text="REGISTER HERE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
+
+# ------------111111111111111111-------------------------------------------------------
+        
+        firstName=Label(self, text="First Name", font=("arial", 12),bg="white", fg="green").place(x=50, y=100)
+        txt_firstName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_firstName.place(x=50,y=130, width=250)
+
+        lastName=Label(self, text="Last Name", font=("arial", 12),bg="white", fg="green").place(x=370, y=100)
+        txt_lastName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_lastName.place(x=370,y=130, width=250)
+
+# ------------222222222222222222222------------------------------------------------------
+        passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
+        txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_passportNo.place(x=50,y=200, width=250)
+
+        address=Label(self, text="Address", font=("arial", 12),bg="white", fg="green").place(x=370, y=170)
+        txt_address=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_address.place(x=370,y=200, width=250)
+
+# -------------333333333333333333333-----------------------------------------------------
+        
+        contactName=Label(self, text="Mobile No", font=("arial", 12),bg="white", fg="green").place(x=50, y=240)
+        txt_contactName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_contactName.place(x=50,y=270, width=250)
+
+        emailId=Label(self, text="Email Id", font=("arial", 12),bg="white", fg="green").place(x=370, y=240)
+        txt_emailId=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_emailId.place(x=370,y=270, width=250)
+
+        addFunds=Label(self, text="Add Funds to the Account", font=("arial", 12),bg="white", fg="green").place(x=50, y=310)
+        txt_addFunds=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_addFunds.place(x=50,y=340, width=250)
+
+
+        btn_editUserdata=Button(self, text="EDIT USER DETAILS" ,font=("arial",20),bg="whitesmoke" , command= lambda: createUser( txt_firstName.get() + ' ' + txt_lastName.get(), txt_passwordName.get(), txt_address.get(), txt_passportNo.get() , txt_emailId.get() , txt_contactName.get()), bd=0,cursor="hand2" ).place(x=50,y=400)
+
+
+       
+        
 
 
         
@@ -418,14 +467,55 @@ class EditAdmin(tk.Frame):
         title=Label(self, text="EDIT ADMIN PROFILE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
 
         title=Label(self, text="ADMIN DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
-
-
+        
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
-        button.pack()
-        deleteUser = tk.Button(self, text="Delete User",
+
+        button.place(x=120, y=300, height=50, width=220)
+
+        deleteUser = tk.Button(self, text="Delete Admin",
                            command= deleteUserH )
-        deleteUser.pack()
+
+        deleteUser.place(x=120, y=400,height=50, width=220)
+
+
+        self=Frame(self, bg="white")
+        self.place(x=480,y=100,width=700,height=500)
+
+        title=Label(self, text="REGISTER HERE", font=("caliber heading", 16,),bg="white", fg="red").place(x=50, y=30)
+
+# ------------111111111111111111-------------------------------------------------------
+        
+        firstName=Label(self, text="First Name", font=("arial", 12),bg="white", fg="green").place(x=50, y=100)
+        txt_firstName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_firstName.place(x=50,y=130, width=250)
+
+        lastName=Label(self, text="Last Name", font=("arial", 12),bg="white", fg="green").place(x=370, y=100)
+        txt_lastName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_lastName.place(x=370,y=130, width=250)
+
+# ------------222222222222222222222------------------------------------------------------
+        passportNo=Label(self, text="Passport No", font=("arial", 12),bg="white", fg="green").place(x=50, y=170)
+        txt_passportNo=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_passportNo.place(x=50,y=200, width=250)
+
+        address=Label(self, text="Address", font=("arial", 12),bg="white", fg="green").place(x=370, y=170)
+        txt_address=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_address.place(x=370,y=200, width=250)
+
+# -------------333333333333333333333-----------------------------------------------------
+        
+        contactName=Label(self, text="Mobile No", font=("arial", 12),bg="white", fg="green").place(x=50, y=240)
+        txt_contactName=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_contactName.place(x=50,y=270, width=250)
+
+        emailId=Label(self, text="Email Id", font=("arial", 12),bg="white", fg="green").place(x=370, y=240)
+        txt_emailId=Entry(self, font=("arial",15),bg="whitesmoke")
+        txt_emailId.place(x=370,y=270, width=250)
+
+
+        btn_editUserdata=Button(self, text="EDIT ADMIN DETAILS" ,font=("arial",20),bg="whitesmoke" , command= lambda: createUser( txt_firstName.get() + ' ' + txt_lastName.get(), txt_passwordName.get(), txt_address.get(), txt_passportNo.get() , txt_emailId.get() , txt_contactName.get()), bd=0,cursor="hand2" ).place(x=50,y=400)
+
 
 
 
