@@ -304,6 +304,7 @@ class Dashboard(tk.Frame):
 
         listbox1 = Listbox(self)
         listbox1.place(x=50,y=290, width=700, height=150) 
+        
         scrollbar = Scrollbar(self) 
         scrollbar.place(x=520,y=290,height=150)  
 
@@ -314,8 +315,10 @@ class Dashboard(tk.Frame):
                 listbox1.insert(END, str(j) + ' ( name ) ' + str(values["userName"]) + '  ( Address ) ' + str(values["address"]) + '   ( Passport )  '+ str(values["passportNumber"])  ) 
 
         def userProfile():
-                current_passport = userIndex[globalRef.userList.curselection()-1]
-                print(globalRef.userList.curselection())
+                
+                
+                globalRef.current_passport = userIndex[int(str(globalRef.userList.curselection())[1:-2])] 
+                
                 controller.show_frame("EditUser")
 
 
@@ -334,7 +337,7 @@ class Dashboard(tk.Frame):
 
         btn_addUser = tk.Button(self, text="Add User",command=lambda: controller.show_frame("UserRegister") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=170)
         
-        btn_editUser = tk.Button(self, text="Edit User",command=lambda: controller.show_frame("EditUser") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=300)
+        btn_editUser = tk.Button(self, text="Edit User",command= userProfile ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=300)
         
         btn_editAdmin = tk.Button(self, text="Edit Admin",command=lambda: controller.show_frame("EditAdmin") ,font=("arial",12),bg="whitesmoke" ,bd=0,cursor="hand2", width=10, height=1).place(x=560,y=370)
 
@@ -345,15 +348,16 @@ class EditUser(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        def deleteUser():
-                if current_passport == dbOperations.currnetPassport:
+        def deleteUserH():
+                if globalRef.current_passport == dbOperations.currnetPassport:
                         tkinter.messagebox.showerror(title="Error !", message="You cannot delete yourself !")
 
                 else:
-                        if dbOperations.deleteUser(current_passport):
+                        x = lambda: dbOperations.deleteUser(globalRef.current_passport)
+                        if x:
                                 tkinter.messagebox.showinfo(title="Done !", message="Successfully deleted!")
-                                globalRef.userList.delete(userIndex.index( str(current_passport) ))
-                                controller.show_frame("Dashboard")
+                                globalRef.userList.delete(userIndex.index( globalRef.current_passport))
+                                controller.show_frame("Dashboard") 
                         else:
                                 tkinter.messagebox.showerror(title="Error !", message="Something went wrong while deleting!")
 
@@ -362,16 +366,15 @@ class EditUser(tk.Frame):
 
         title=Label(self, text="USER DATA", font=("caliber heading", 10,),bg="white", fg="green").place(x=50, y=80)
 
-        deleteUser = tk.Button(self, text="Delete User",
-                           command=lambda: deleteUser())
+       
         button = tk.Button(self, text="Go to Dashboard",
                            command=lambda: controller.show_frame("Dashboard"))
 
-        deleteUser = tk.Button(self, text="Delete User",
-                           command=lambda: deleteUser())
-        deleteUser.Pack()
-
         button.pack()
+        deleteUser = tk.Button(self, text="Delete User",
+                           command= deleteUserH )
+        deleteUser.pack()
+
 
         
 class EditAdmin(tk.Frame):
